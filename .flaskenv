@@ -1,2 +1,2 @@
 FLASK_APP=shoppinglist.py
-FLASK_DEBUG=True
+#FLASK_DEBUG=True

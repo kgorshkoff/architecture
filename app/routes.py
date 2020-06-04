@@ -3,7 +3,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.urls import url_parse
 
 from app import app, db
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, ListForm
 from app.models import User, ItemList
 
 
@@ -53,6 +53,15 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Регистрация', form=form)
 
-@app.route('/list')
+@app.route('/list', methods=['GET', 'POST'])
 def list():
-    return render_template('create_list.html')
+    form = ListForm()
+
+    if form.add_item.data:
+        form.items.append_entry()
+        return render_template('create_list.html', form=form)
+
+    if form.validate_on_submit():
+        flash('saved')
+        
+    return render_template('create_list.html', form=form)
