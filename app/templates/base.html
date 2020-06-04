@@ -13,12 +13,12 @@
   </head>
   <body>
     <div>
-      Shopping list:
-        <a href="{{ url_for('index') }}">Home</a>
+      Список покупок:
+        <a href="{{ url_for('index') }}">Главная</a>
         {% if current_user.is_anonymous %}
-        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('login') }}">Войти</a>
         {% else %}
-        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('logout') }}">Выйти</a>
         {% endif %}
     </div>
     <hr>

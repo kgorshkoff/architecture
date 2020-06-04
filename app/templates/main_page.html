@@ -1,7 +1,14 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
   <div class='container'>
-    <h1>Sign in or register</h1>
+    <h1>Привет, {{ current_user.username }}</h1>
+    {% if lists|length %}
+      {% for list in lists %}
+        {{ list }}
+      {% endfor %}
+    {% else %}
+      <a href="/list">Создать список?</a>
+    {% endif %}
   </div>
 {% endblock %}

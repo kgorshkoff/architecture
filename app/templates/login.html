@@ -1,8 +1,8 @@
-{% extends "layout.html" %}
-{% block title %}Home{% endblock %}
+{% extends "base.html" %}
+{% block title %}Войти{% endblock %}
 {% block content %}
     <div class='container'>
-        <h1>Sign In</h1>
+        <h1>Войти</h1>
         <form action="" method="post" novalidate>
             {{ form.hidden_tag() }}
             <p>
@@ -22,5 +22,6 @@
             <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
             <p>{{ form.submit() }}</p>
         </form>
+        <p>Новый пользователь? <a href="{{ url_for('register') }}">Кликни для регистрации!</a></p>
     </div>
 {% endblock %}
