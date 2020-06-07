@@ -53,9 +53,15 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Регистрация', form=form)
 
+
+@app.route('/list/<int:list_id>')
 @app.route('/list', methods=['GET', 'POST'])
-def list():
-    form = ListForm()
+def list(list_id=None):
+    if list_id:
+        obj = ItemList.query.filter_by(id=list_id).first()
+        form = ListForm(obj=obj)
+    else:
+        form = ListForm()
 
     if form.add_item.data:
         form.items.append_entry()
