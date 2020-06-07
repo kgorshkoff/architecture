@@ -2,6 +2,22 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 <div class='container'>
-    <h1>Ваши списки</h1>
+    <h1>Новый список</h1>
+    <form action="{{ url_for('list') }}" method="post" id="parentForm">
+    {{ form.hidden_tag() }}
+    {{ form.name.label }} {{ form.name }}
+
+    {{ form.add_item }}
+
+    {% for itemform in form.items %}
+    <div>
+        {% for field in itemform %}
+            {{ field.label }} {{ field }}   
+        {% endfor %}
+    </div>
+    {% endfor %}
+    <br>
+    {{ form.submit }}
+</form>
 </div>
 {% endblock %}

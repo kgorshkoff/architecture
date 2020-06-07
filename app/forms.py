@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, PasswordField, StringField, SubmitField
+from wtforms import (BooleanField, FieldList, FormField, IntegerField,
+                     PasswordField, StringField, SubmitField)
 from wtforms.validators import DataRequired, EqualTo, ValidationError
 
 from app.models import User
@@ -23,3 +24,18 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
             raise ValidationError('Пожалуйста, используйте другое имя.')
+
+
+class ItemForm(FlaskForm):
+    name = StringField(label='Предмет')
+    quantity = IntegerField(label='Количество')
+    class Meta:
+        csrf = False
+
+
+class ListForm(FlaskForm):
+    name = StringField(label='Название списка')
+    items = FieldList(FormField(ItemForm), label='Предмет')
+    add_item = SubmitField(label='Добавить предмет')
+
+    submit = SubmitField(label='Сохранить')
