@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class='container'>
+    {% if form.items %}
+        <h1>Редактировать список</h1>
+    {% else %}
+        <h1>Новый список</h1>
+    {% endif %}
+    <form action="{{ url_for('list') }}" method="post" id="parentForm">
+        {{ form.id }}
+        {{ form.hidden_tag() }}
+        {{ form.name.label }} {{ form.name }}
+
+        {{ form.add_item }}
+        {{ form.remove_item }}
+
+        {% for itemform in form.items %}
+        <div>
+            {% for field in itemform %}
+                {{ field.label }} {{ field }}   
+            {% endfor %}
+        </div>
+        {% endfor %}
+        <br>
+        {{ form.submit }}
+    </form>
+</div>
+{% endblock %}

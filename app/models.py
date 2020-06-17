@@ -27,8 +27,8 @@ class User(db.Model, UserMixin):
 
 class ItemList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    # items = db.Column()
+    name = db.Column(db.String, nullable=False)
+    items = db.relationship('Item', backref='items', lazy='dynamic')
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     # subscribers = db.Column(db.Integer, )
     
@@ -37,8 +37,6 @@ class ItemList(db.Model):
          
 
 # class BaseItem(db.Model):
-#     __tablename__ = 'base_item'
-    
 #     id = db.Column(db.Integer, primary_key=True)
 #     name = db.Column(db.String, nullable=False, unique=True)
     
@@ -49,8 +47,6 @@ class ItemList(db.Model):
 #         pass
     
 # class Category(db.Model):
-#     __tablename__ = 'category'
-    
 #     id = db.Column(db.Integer, primary_key=True)
 #     name = db.Column(db.String, nullable=False, unique=True)
     
@@ -61,7 +57,17 @@ class ItemList(db.Model):
 #         pass
 
 
-# class Item(BaseItem, Category):
-#     __tablename__ = 'item'
+class Item(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    quantity = db.Column(db.Integer)
+    list_id = db.Column(db.Integer, db.ForeignKey('item_list.id'))
+
+    def create_item(self):
+        pass
     
-#     id_item = db.Column(db.Integer, primary_key=True)
+    def delete_item(self, id):
+        pass
+    
+    def __repr__(self):
+        return '<Item {}>'.format(self.name)

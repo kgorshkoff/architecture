@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import (BooleanField, FieldList, FormField, IntegerField,
-                     PasswordField, StringField, SubmitField)
+from wtforms import (BooleanField, FieldList, FormField, HiddenField,
+                     IntegerField, PasswordField, StringField, SubmitField)
 from wtforms.validators import DataRequired, EqualTo, ValidationError
 
 from app.models import User
@@ -34,8 +34,10 @@ class ItemForm(FlaskForm):
 
 
 class ListForm(FlaskForm):
+    id = HiddenField()
     name = StringField(label='Название списка')
     items = FieldList(FormField(ItemForm), label='Предмет')
     add_item = SubmitField(label='Добавить предмет')
+    remove_item=SubmitField(label='Удалить предмет')
 
     submit = SubmitField(label='Сохранить')
