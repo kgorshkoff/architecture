@@ -90,3 +90,10 @@ def list(list_id=None):
         return redirect(url_for('index'))
         
     return render_template('list.html', form=form)
+
+@app.route('/list/<int:list_id>/delete', methods=['POST'])
+def list_delete(list_id):
+    if request.method == 'POST':
+        obj = ItemList.query.filter_by(id=list_id).delete()
+        db.session.commit()
+        return redirect(url_for('index'))
