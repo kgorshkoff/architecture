@@ -34,17 +34,7 @@ class ItemList(db.Model):
     
     def __repr__(self):
         return '<List {}>'.format(self.name)
-         
 
-# class BaseItem(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String, nullable=False, unique=True)
-    
-#     def create_item(self):
-#         pass
-    
-#     def delete_item(self, id):
-#         pass
     
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -58,6 +48,7 @@ class Item(db.Model):
     quantity = db.Column(db.Integer)
     category = db.Column(db.Integer, db.ForeignKey('category.id'))
     list_id = db.Column(db.Integer, db.ForeignKey('item_list.id'))
+    bought = db.Column(db.Boolean)
     
     def __repr__(self):
         return '<Item {}>'.format(self.name)

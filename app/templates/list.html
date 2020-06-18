@@ -18,10 +18,14 @@
         {% for itemform in form.items %}
         <div>
             {% for field in itemform %}
-                {{ field }}
+                {{ field }} 
                 <!-- {{ field.label }} {{ field }}    -->
             {% endfor %}
+            Куплено?
         </div>
+        {% endfor %}
+        {% for error in form.items.errors %}
+            <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
         <br>
         {{ form.submit }}

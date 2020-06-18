@@ -3,8 +3,8 @@ from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.urls import url_parse
 
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, ListForm
-from app.models import User, ItemList, Item
+from app.forms import ListForm, LoginForm, RegistrationForm
+from app.models import Item, ItemList, User
 
 
 @app.route('/')
@@ -84,7 +84,13 @@ def list(list_id=None):
         db.session.commit()
         
         for i in form.data['items']:
-            item = Item(name=i['name'], quantity=i['quantity'], category=i['category'], list_id=itemlist.id)
+            item = Item(
+                name=i['name'], 
+                quantity=i['quantity'], 
+                category=i['category'], 
+                bought=i['bought'],
+                list_id=itemlist.id
+                )
             db.session.add(item)
         db.session.commit()
         return redirect(url_for('index'))

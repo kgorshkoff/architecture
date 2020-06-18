@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import (BooleanField, FieldList, FormField, HiddenField,
-                     IntegerField, PasswordField, StringField, SubmitField)
+                     IntegerField, PasswordField, StringField, SubmitField, BooleanField)
 from wtforms.validators import DataRequired, EqualTo, ValidationError
 
 from app.models import User
@@ -27,9 +27,11 @@ class RegistrationForm(FlaskForm):
 
 
 class ItemForm(FlaskForm):
-    name = StringField(render_kw={"placeholder":"Предмет"}, label='Предмет')
-    category = StringField(render_kw={"placeholder":"Категория"}, label='Категория')
-    quantity = IntegerField(render_kw={"placeholder":"Количество"}, label='Количество')
+    name = StringField(render_kw={"placeholder":"Предмет"})
+    category = StringField(render_kw={"placeholder":"Категория"})
+    quantity = IntegerField(render_kw={"placeholder":"Количество"})
+    bought = BooleanField(label='Куплено')
+
     class Meta:
         csrf = False
 
