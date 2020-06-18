@@ -46,28 +46,18 @@ class ItemList(db.Model):
 #     def delete_item(self, id):
 #         pass
     
-# class Category(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String, nullable=False, unique=True)
-    
-#     def create_item(self):
-#         pass
-    
-#     def delete_item(self, id):
-#         pass
+class Category(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False, unique=True)
+    item = db.relationship('Item', backref='item', lazy='dynamic')
 
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     quantity = db.Column(db.Integer)
+    category = db.Column(db.Integer, db.ForeignKey('category.id'))
     list_id = db.Column(db.Integer, db.ForeignKey('item_list.id'))
-
-    def create_item(self):
-        pass
-    
-    def delete_item(self, id):
-        pass
     
     def __repr__(self):
         return '<Item {}>'.format(self.name)

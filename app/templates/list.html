@@ -18,7 +18,8 @@
         {% for itemform in form.items %}
         <div>
             {% for field in itemform %}
-                {{ field.label }} {{ field }}   
+                {{ field }}
+                <!-- {{ field.label }} {{ field }}    -->
             {% endfor %}
         </div>
         {% endfor %}

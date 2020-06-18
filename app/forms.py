@@ -27,8 +27,9 @@ class RegistrationForm(FlaskForm):
 
 
 class ItemForm(FlaskForm):
-    name = StringField(label='Предмет')
-    quantity = IntegerField(label='Количество')
+    name = StringField(render_kw={"placeholder":"Предмет"}, label='Предмет')
+    category = StringField(render_kw={"placeholder":"Категория"}, label='Категория')
+    quantity = IntegerField(render_kw={"placeholder":"Количество"}, label='Количество')
     class Meta:
         csrf = False
 
@@ -36,7 +37,7 @@ class ItemForm(FlaskForm):
 class ListForm(FlaskForm):
     id = HiddenField()
     name = StringField(label='Название списка')
-    items = FieldList(FormField(ItemForm), label='Предмет')
+    items = FieldList(FormField(ItemForm), label='Предметы')
     add_item = SubmitField(label='Добавить предмет')
     remove_item=SubmitField(label='Удалить предмет')
 

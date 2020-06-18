@@ -84,7 +84,7 @@ def list(list_id=None):
         db.session.commit()
         
         for i in form.data['items']:
-            item = Item(name=i['name'], quantity=i['quantity'], list_id=itemlist.id)
+            item = Item(name=i['name'], quantity=i['quantity'], category=i['category'], list_id=itemlist.id)
             db.session.add(item)
         db.session.commit()
         return redirect(url_for('index'))
