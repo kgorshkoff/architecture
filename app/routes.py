@@ -83,15 +83,15 @@ def list(list_id=None):
         Item.query.filter_by(list_id=itemlist.id).delete()
         db.session.commit()
         
-        for i in form.data['items']:
-            item = Item(
-                name=i['name'], 
-                quantity=i['quantity'], 
-                category=i['category'], 
-                bought=i['bought'],
+        for item in form.data['items']:
+            new_item = Item(
+                name=item['name'], 
+                quantity=item['quantity'], 
+                category=item['category'], 
+                bought=item['bought'],
                 list_id=itemlist.id
                 )
-            db.session.add(item)
+            db.session.add(new_item)
         db.session.commit()
         return redirect(url_for('index'))
         
@@ -100,6 +100,6 @@ def list(list_id=None):
 @app.route('/list/<int:list_id>/delete', methods=['POST'])
 def list_delete(list_id):
     if request.method == 'POST':
-        obj = ItemList.query.filter_by(id=list_id).delete()
+        ItemList.query.filter_by(id=list_id).delete()
         db.session.commit()
         return redirect(url_for('index'))
