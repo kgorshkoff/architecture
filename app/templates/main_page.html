@@ -3,12 +3,15 @@
 {% block content %}
   <div class='container'>
     <h1>Привет, {{ current_user.username }}</h1>
+    <div>
     {% if lists|length %}
       {% for list in lists %}
-        {{ list }}
+        <a href="/list/{{ list.id }}">{{ list.name }}</a><br>
       {% endfor %}
-    {% else %}
-      <a href="/list">Создать список?</a>
     {% endif %}
+    </div>
+  </div>
+  <div class='container'>
+    <a href="/list">Создать список?</a>
   </div>
 {% endblock %}

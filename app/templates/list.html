@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class='container'>
+    {% if form.items %}
+        <h1>Редактировать список</h1>
+    {% else %}
+        <h1>Новый список</h1>
+    {% endif %}
+    <form action="{{ url_for('list') }}" method="post" id="parentForm">
+        {{ form.id }}
+        {{ form.hidden_tag() }}
+        {{ form.name.label }} {{ form.name }}
+
+        {{ form.add_item }}
+        {{ form.remove_item }}
+
+        {% for itemform in form.items %}
+        <div>
+            {% for field in itemform %}
+                {{ field }} 
+                <!-- {{ field.label }} {{ field }}    -->
+            {% endfor %}
+            Куплено?
+        </div>
+        {% endfor %}
+        {% for error in form.items.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        <br>
+        {{ form.submit }}
+        <br>
+        <!-- {{ form.list_delete }} -->
+    </form>
+    {% if form.id.data %} 
+        <form action='{{ url_for("list_delete", list_id=form.id.data) }}' method="POST">
+            <input type="submit" value="Удалить список?">
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

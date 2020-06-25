@@ -3,8 +3,8 @@ from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.urls import url_parse
 
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, ListForm
-from app.models import User, ItemList
+from app.forms import ListForm, LoginForm, RegistrationForm
+from app.models import Item, ItemList, User
 
 
 @app.route('/')
@@ -65,9 +65,41 @@ def list(list_id=None):
 
     if form.add_item.data:
         form.items.append_entry()
-        return render_template('create_list.html', form=form)
+        return render_template('list.html', form=form)
+    
+    if form.remove_item.data:
+        form.items.pop_entry()
+        return render_template('list.html', form=form)
 
     if form.validate_on_submit():
-        flash('saved')
+        if form.data['id'] != '':
+            itemlist = ItemList.query.filter_by(id=int(form.data['id'])).first()
+            itemlist.name = form.data['name']
+        else:
+            itemlist = ItemList(name=form.data['name'], owner_id=current_user.id)
+        db.session.add(itemlist)
+        db.session.commit()
         
-    return render_template('create_list.html', form=form)
+        Item.query.filter_by(list_id=itemlist.id).delete()
+        db.session.commit()
+        
+        for item in form.data['items']:
+            new_item = Item(
+                name=item['name'], 
+                quantity=item['quantity'], 
+                category=item['category'], 
+                bought=item['bought'],
+                list_id=itemlist.id
+                )
+            db.session.add(new_item)
+        db.session.commit()
+        return redirect(url_for('index'))
+        
+    return render_template('list.html', form=form)
+
+@app.route('/list/<int:list_id>/delete', methods=['POST'])
+def list_delete(list_id):
+    if request.method == 'POST':
+        ItemList.query.filter_by(id=list_id).delete()
+        db.session.commit()
+        return redirect(url_for('index'))
