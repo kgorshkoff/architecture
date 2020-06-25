@@ -20,16 +20,17 @@ class RegistrationForm(FlaskForm):
         'Повторите пароль', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Зарегистрироваться')
 
-    def validate_username(self, username):
+    @staticmethod
+    def validate_username(username):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
             raise ValidationError('Пожалуйста, используйте другое имя.')
 
 
 class ItemForm(FlaskForm):
-    name = StringField(render_kw={"placeholder":"Предмет"})
-    category = StringField(render_kw={"placeholder":"Категория"})
-    quantity = IntegerField(render_kw={"placeholder":"Количество"})
+    name = StringField(render_kw={"placeholder": "Предмет"})
+    category = StringField(render_kw={"placeholder": "Категория"})
+    quantity = IntegerField(render_kw={"placeholder": "Количество"})
     bought = BooleanField(label='Куплено')
 
     class Meta:
