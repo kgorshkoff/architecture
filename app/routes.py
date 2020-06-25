@@ -56,7 +56,7 @@ def register():
 
 @app.route('/list/<int:list_id>')
 @app.route('/list', methods=['GET', 'POST'])
-def list(list_id=None):
+def create_edit_list(list_id=None):
     if list_id:
         obj = ItemList.query.filter_by(id=list_id).first()
         form = ListForm(obj=obj)
@@ -96,6 +96,7 @@ def list(list_id=None):
         return redirect(url_for('index'))
         
     return render_template('list.html', form=form)
+
 
 @app.route('/list/<int:list_id>/delete', methods=['POST'])
 def list_delete(list_id):
